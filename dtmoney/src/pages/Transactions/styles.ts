@@ -81,6 +81,8 @@ interface PriceHighligtProps {
     variant: 'income' | 'outcome';
 }
 
-export const PriceHighligt = styled.span<PriceHighligtProps>`
+export const PriceHighligt = styled.span.withConfig({
+    shouldForwardProp: (prop) => prop !== 'variant'
+})<PriceHighligtProps>`
     color: ${props => props.variant === 'income' ? props.theme['green-300'] : props.theme['red-300']};
 `;

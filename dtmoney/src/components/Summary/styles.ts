@@ -23,7 +23,9 @@ interface SummaryCardProps {
     variant?: 'green'
 }
 
-export const SummaryCard = styled.div<SummaryCardProps>`
+export const SummaryCard = styled.div.withConfig({
+    shouldForwardProp: (prop) => !['variant'].includes(prop)
+})<SummaryCardProps>`
     background: ${props => props.theme['gray-600']};
     border-radius: 6px;
     padding: 2rem;
