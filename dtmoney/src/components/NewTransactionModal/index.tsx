@@ -4,6 +4,8 @@ import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
 import * as z from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext } from 'react';
+import { TransactionsContext } from '../../contexts/TransactionsContext';
 
 const newTransactionFormSchema = z.object({
     description: z.string(),
@@ -15,11 +17,14 @@ const newTransactionFormSchema = z.object({
 type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>;
 
 export default function NewTransactionalModal() {
+    const { createTransaction } = useContext(TransactionsContext);
+
     const { 
         control,
         register, 
         handleSubmit,
-        formState: { isSubmitting } 
+        formState: { isSubmitting },
+        reset 
     } = useForm<NewTransactionFormInputs>({
         resolver: zodResolver(newTransactionFormSchema),
         defaultValues: {
@@ -28,16 +33,23 @@ export default function NewTransactionalModal() {
     })
 
     async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        const { description, price, category, type } = data;
 
-        console.log(data)
+        await createTransaction({
+            description,
+            price,
+            category,
+            type
+        });     
+        
+        reset();
     }
 
     return (
         <Dialog.Portal>
             <Overlay />
-            <Content aria-labelledby="dialog-title">
-                <Dialog.Title id="dialog-title">Nova Transação</Dialog.Title>
+            <Content>
+                <Dialog.Title>Nova Transação</Dialog.Title>
                 <CloseButton>
                     <X size={24} />
                 </CloseButton>
@@ -67,7 +79,10 @@ export default function NewTransactionalModal() {
                         name='type'
                         render={({ field }) => {
                             return (
-                                <TransctionType onValueChange={field.onChange} value={field.value}>
+                                <TransctionType 
+                                    onValueChange={field.onChange} 
+                                    value={field.value}
+                                >
                                     <TransactionTypeButton variant='income' value="income">
                                         <ArrowCircleUp size={24} />
                                         Entrada                            
