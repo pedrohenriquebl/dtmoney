@@ -31,6 +31,14 @@
       "type": "outcome",
       "createdAt": "2025-03-26T20:31:04.666Z",
       "id": 4
+    },
+    {
+      "description": "Galinhão",
+      "price": 10,
+      "category": "Alimentação",
+      "type": "outcome",
+      "createdAt": "2025-03-27T19:19:22.078Z",
+      "id": 5
     }
   ]
 }
