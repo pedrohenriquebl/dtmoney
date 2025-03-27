@@ -39,6 +39,14 @@
       "type": "outcome",
       "createdAt": "2025-03-27T19:19:22.078Z",
       "id": 5
+    },
+    {
+      "description": "Almoço",
+      "price": 20,
+      "category": "Alimentação",
+      "type": "outcome",
+      "createdAt": "2025-03-27T19:36:12.906Z",
+      "id": 6
     }
   ]
 }
